@@ -1,6 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+//    id("com.github.dcendents.android-maven")
+    id("maven-publish")
     id("org.jetbrains.kotlin.plugin.serialization") version "1.4.30"
     kotlin("jvm") version "1.6.10"
     application
@@ -11,8 +13,13 @@ version = "1.7-SNAPSHOT"
 
 repositories {
     mavenCentral()
-    maven { url = uri("https://jitpack.io") }
 }
+
+//publishing {
+//    publications {
+//
+//    }
+//}
 
 dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
