@@ -6,11 +6,12 @@ plugins {
     application
 }
 
-group = "loli.ball"
+group = "com.github.WhichWho"
 version = "1.7-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    maven { url = uri("https://jitpack.io") }
 }
 
 dependencies {
