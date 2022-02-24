@@ -1,5 +1,11 @@
 package loli.ball.kemono.bean
 
+//全部作品页面的每一页
+data class SimplePostGroup(
+    val simplePosts: List<SimplePost>,  //每页的作品摘要信息
+    val range: Range                    //页面范围
+)
+
 //作品摘要
 //作者页面的每一期作品
 data class SimplePost(

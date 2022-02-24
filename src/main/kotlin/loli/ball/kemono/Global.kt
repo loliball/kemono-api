@@ -10,3 +10,7 @@ val GTMDateParser = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'", Locale.E
 
 //2022-01-26 22:10:13
 val dateParser = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
+
+val rangeRegexp = """Showing (\d+) - (\d+) of (\d+)""".toRegex()
+
+val pictureCountRegexp = """(\d+).*""".toRegex()

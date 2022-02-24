@@ -51,6 +51,19 @@ object Network {
     fun allArtist() =
         ArtistFactory.parseAllArtist(allArtistJson().orEmpty())
 
+    fun allPostsJson(offset: Int = 0, search: String = "") =
+        PostFactory.allPosts(offset, search).toGetRequest().call()
+
+    /**
+     * 获取全部画廊
+     *
+     * @param offset 分页偏移，默认每页25个
+     * @param search 搜索内容，根据画廊名称搜索
+     * @return
+     */
+    fun allPosts(offset: Int = 0, search: String = "") =
+        PostFactory.parseAllPost(allPostsJson(offset, search).orEmpty())
+
     fun SimpleArtist.toArtist(offset: Int = 0) =
         ArtistFactory.parseArtist(this.toArtistUrl(offset).toGetRequest().call().orEmpty())
 

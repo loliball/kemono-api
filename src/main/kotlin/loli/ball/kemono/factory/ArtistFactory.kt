@@ -2,13 +2,11 @@ package loli.ball.kemono.factory
 
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import loli.ball.kemono.BASE_URL
-import loli.ball.kemono.GTMDateParser
+import loli.ball.kemono.*
 import loli.ball.kemono.bean.Artist
 import loli.ball.kemono.bean.Range
 import loli.ball.kemono.bean.SimpleArtist
 import loli.ball.kemono.bean.SimplePost
-import loli.ball.kemono.dateParser
 import org.jsoup.Jsoup
 
 object ArtistFactory {
@@ -78,8 +76,7 @@ object ArtistFactory {
         return artistList
     }
 
-    private val rangeRegexp = """Showing (\d+) - (\d+) of (\d+)""".toRegex()
-    private val pictureCountRegexp = """(\d+).*""".toRegex()
+
 
     /**
      * 解析作者页面html

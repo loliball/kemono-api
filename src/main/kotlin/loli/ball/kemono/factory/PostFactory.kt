@@ -3,6 +3,8 @@ package loli.ball.kemono.factory
 import loli.ball.kemono.BASE_URL
 import loli.ball.kemono.bean.*
 import loli.ball.kemono.dateParser
+import loli.ball.kemono.pictureCountRegexp
+import loli.ball.kemono.rangeRegexp
 import org.jsoup.Jsoup
 
 object PostFactory {
@@ -21,11 +23,67 @@ object PostFactory {
         "$BASE_URL/$service/user/$user/post/$id"
 
     fun getPostUrlBySimplePost(sp: SimplePost) =
-        if(sp.service == ArtistService.discord.name) sp.url
+        if (sp.service == ArtistService.discord.name) sp.url
         else getPostUrlById(sp.service, sp.user, sp.id)
 
     fun SimplePost.toPostUrl() = getPostUrlBySimplePost(this)
 
+    /**
+     * 获取全部画廊url
+     *
+     * @param offset 分页偏移，默认每页25个
+     * @param search 搜索内容，根据画廊名称搜索
+     * @return
+     */
+    fun allPosts(offset: Int = 0, search: String = "") =
+        "$BASE_URL/posts?o=$offset" + if (search.isBlank()) "" else "&q=$search"
+
+    /**
+     * 解析画廊页面
+     *
+     * @param html 画廊页面html
+     * @return
+     */
+    fun parseAllPost(html: String): SimplePostGroup {
+        val doc = Jsoup.parse(html)
+        val posts = mutableListOf<SimplePost>()
+        val range = doc.select("#paginator-top > small").text().trim()
+        val result = rangeRegexp.find(range)?.groupValues
+        val now = result?.get(1)?.toInt() ?: 0
+        val end = result?.get(2)?.toInt() ?: 0
+        val all = result?.get(3)?.toInt() ?: 0
+
+        val fs =
+            doc.select("#main > section > div.card-list.card-list--legacy > div.card-list__items")
+                .ifEmpty { null }?.get(0)
+        for (fi in fs?.children().orEmpty()) {
+            if (fi.tag().name == "article" ||
+                fi.hasClass("post-card")
+            ) {
+                val id = fi.attr("data-id")
+                val service = fi.attr("data-service")
+                val user = fi.attr("data-user")
+
+                val a = fi.child(0)
+                val url = BASE_URL + a.attr("href").orEmpty()
+                val name = a.select("header").ifEmpty { null }?.get(0)?.text().orEmpty()
+                val thumbnail = a.select("div > img").ifEmpty { null }?.get(0)?.attr("src").orEmpty()
+                val img = if (thumbnail.isBlank()) "" else BASE_URL + thumbnail
+                val time = a.select("footer > time").ifEmpty { null }?.get(0)?.attr("datetime").orEmpty()
+                val timestamp = if (time.isNotBlank()) dateParser.parse(time).time else 0
+                val countText = a.select("footer > div").ifEmpty { null }?.get(0)?.text().orEmpty()
+                val result1 = pictureCountRegexp.find(countText)?.groupValues
+                val pictureCount = result1?.get(1)?.toInt() ?: 0
+
+                posts += SimplePost(
+                    service, user, id,
+                    url, name, img, time, pictureCount, timestamp
+                )
+            }
+        }
+
+        return SimplePostGroup(posts, Range(now, end, all))
+    }
 
     /**
      * 解析作品页面html
