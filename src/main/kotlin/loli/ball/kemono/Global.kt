@@ -14,3 +14,5 @@ val dateParser = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
 val rangeRegexp = """Showing (\d+) - (\d+) of (\d+)""".toRegex()
 
 val pictureCountRegexp = """(\d+).*""".toRegex()
+
+class AccountException(override val message: String?): Exception(message)

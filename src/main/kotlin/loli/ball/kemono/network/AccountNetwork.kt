@@ -1,5 +1,6 @@
 package loli.ball.kemono.network
 
+import loli.ball.kemono.AccountException
 import loli.ball.kemono.BASE_URL
 import loli.ball.kemono.bean.*
 import loli.ball.kemono.factory.AccountFactory
@@ -12,7 +13,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.internal.EMPTY_REQUEST
 
-
+@Suppress("unused")
 object AccountNetwork {
 
     private var noRedirectsClient = OkHttpClient.Builder()
@@ -133,6 +134,9 @@ object AccountNetwork {
             .get()
             .build()
         val response = noRedirectsClient.newCall(request).execute()
+        if(response.code != 200) {
+            throw AccountException(response.code.toString())
+        }
         return response.body?.string().orEmpty()
     }
 
@@ -143,6 +147,9 @@ object AccountNetwork {
             .get()
             .build()
         val response = noRedirectsClient.newCall(request).execute()
+        if(response.code != 200) {
+            throw AccountException(response.code.toString())
+        }
         return response.body?.string().orEmpty()
     }
 
