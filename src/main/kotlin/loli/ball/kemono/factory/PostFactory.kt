@@ -120,7 +120,7 @@ object PostFactory {
             if (fi.hasClass("post__attachment")) {
                 val a = fi.child(0)
                 val fileUrl = BASE_URL + a.attr("href")
-                val fileName = a.text()
+                val fileName = a.text().replaceFirst("Download ", "")
                 files.add(RemoteFile(fileName, fileUrl))
             }
         }
