@@ -1,8 +1,6 @@
 package loli.ball.kemono.bean
 
-import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
-import okhttp3.Cookie
 
 @Serializable
 data class Account(
