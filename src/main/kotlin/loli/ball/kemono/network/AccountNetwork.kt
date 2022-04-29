@@ -121,7 +121,7 @@ object AccountNetwork {
     fun FavoritePostItem.toSimplePost(): SimplePost {
         val url = "$BASE_URL/$service/user/$user/post/$id"
         val pictureCount = attachments.size
-        return SimplePost(service, user, id, url, title, file.path, published, pictureCount, publishedTimestamp)
+        return SimplePost(service, user, id, url, title, BASE_URL + file.path, published, pictureCount, publishedTimestamp)
     }
 
     fun FavoritePostItem.toPictureGroup() =
