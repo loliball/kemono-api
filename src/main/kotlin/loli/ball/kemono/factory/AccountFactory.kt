@@ -35,6 +35,7 @@ object AccountFactory {
 
     private val postParser = Json {
         ignoreUnknownKeys = true
+        coerceInputValues = true
     }
 
     fun parseFavoritePost(json: String): List<FavoritePostItem> {
