@@ -129,7 +129,8 @@ object AccountNetwork {
 
     fun favoriteArtistsJson(): String {
         val request = Request.Builder()
-            .url("$BASE_URL/api/favorites?type=artist")
+//            .url("$BASE_URL/api/favorites?type=artist")
+            .url("$BASE_URL/api/v1/account/favorites?type=artist")
             .addHeader("cookie", account!!.cookie)
             .get()
             .build()
@@ -142,7 +143,8 @@ object AccountNetwork {
 
     fun favoritePostsJson(): String {
         val request = Request.Builder()
-            .url("$BASE_URL/api/favorites?type=post")
+//            .url("$BASE_URL/api/favorites?type=post")
+            .url("$BASE_URL/api/v1/account/favorites?type=post")
             .addHeader("cookie", account!!.cookie)
             .get()
             .build()
