@@ -6,6 +6,7 @@ import loli.ball.kemono.dateParser
 import loli.ball.kemono.pictureCountRegexp
 import loli.ball.kemono.rangeRegexp
 import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
 
 object PostFactory {
 
@@ -94,6 +95,7 @@ object PostFactory {
      */
     fun parsePost(html: String): Post {
         val doc = Jsoup.parse(html)
+        doc.outputSettings(Document.OutputSettings().prettyPrint(false))
 
         var service = ""
         var user = ""
@@ -111,7 +113,7 @@ object PostFactory {
 
         val name = doc.select("#page > header > div.post__info > h1.post__title > span:nth-child(1)").text()
         val time = doc.select("#page > header > div.post__info > div.post__published > time").attr("datetime")
-        val desc = doc.select("#page > div > div.post__content").text()
+        val desc = doc.select("#page > div > div.post__content").html().trim()
         val timestamp = if (time.isNotBlank()) dateParser.parse(time).time else 0
 
         val files = mutableListOf<RemoteFile>()
