@@ -11,7 +11,7 @@ allprojects {
 Step 2. Add the dependency
 ```
 dependencies {
-	implementation("com.github.WhichWho:cloud-api:+")
+    implementation("com.github.WhichWho:kemono-api:1.17")
 }
 ```
 ## example
