@@ -127,7 +127,7 @@ object AccountNetwork {
     fun FavoritePostItem.toPictureGroup() =
         this.toSimplePost().toPost()
 
-    fun favoriteArtistsJson(): String {
+    private fun favoriteArtistsJson(): String {
         val request = Request.Builder()
 //            .url("$BASE_URL/api/favorites?type=artist")
             .url("$BASE_URL/api/v1/account/favorites?type=artist")
@@ -141,7 +141,7 @@ object AccountNetwork {
         return response.body?.string().orEmpty()
     }
 
-    fun favoritePostsJson(): String {
+    private fun favoritePostsJson(): String {
         val request = Request.Builder()
 //            .url("$BASE_URL/api/favorites?type=post")
             .url("$BASE_URL/api/v1/account/favorites?type=post")
