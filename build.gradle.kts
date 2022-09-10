@@ -24,7 +24,7 @@ publishing {
 
 dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
-    implementation("org.jsoup:jsoup:1.15.2")
+    implementation("org.jsoup:jsoup:1.15.3")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
     testImplementation(kotlin("test"))
 }

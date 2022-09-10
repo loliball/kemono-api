@@ -6,11 +6,8 @@ import loli.ball.kemono.bean.*
 import loli.ball.kemono.factory.AccountFactory
 import loli.ball.kemono.network.Network.toArtist
 import loli.ball.kemono.network.Network.toPost
-import okhttp3.Cookie
-import okhttp3.FormBody
+import okhttp3.*
 import okhttp3.HttpUrl.Companion.toHttpUrl
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import okhttp3.internal.EMPTY_REQUEST
 
 @Suppress("unused")
@@ -51,14 +48,14 @@ object AccountNetwork {
      *
      * @return 所有作者的摘要信息
      */
-    fun favoriteArtists() = AccountFactory.parseFavoriteArtist(favoriteArtistsJson())
+    fun favoriteArtists(noCache: Boolean = false) = AccountFactory.parseFavoriteArtist(favoriteArtistsJson(noCache))
 
     /**
      * 获取所有收藏的作品
      *
      * @return 所有作品的摘要信息
      */
-    fun favoritePosts() = AccountFactory.parseFavoritePost(favoritePostsJson())
+    fun favoritePosts(noCache: Boolean = false) = AccountFactory.parseFavoritePost(favoritePostsJson(noCache))
 
     fun favoriteArtist(service: String, user: String) {
         val request = Request.Builder()
@@ -127,11 +124,15 @@ object AccountNetwork {
     fun FavoritePostItem.toPictureGroup() =
         this.toSimplePost().toPost()
 
-    private fun favoriteArtistsJson(): String {
+    private fun favoriteArtistsJson(noCache: Boolean = false): String {
         val request = Request.Builder()
 //            .url("$BASE_URL/api/favorites?type=artist")
             .url("$BASE_URL/api/v1/account/favorites?type=artist")
             .addHeader("cookie", account!!.cookie)
+            .let {
+                if(noCache) it.cacheControl(CacheControl.FORCE_NETWORK)
+                else it
+            }
             .get()
             .build()
         val response = noRedirectsClient.newCall(request).execute()
@@ -141,11 +142,15 @@ object AccountNetwork {
         return response.body?.string().orEmpty()
     }
 
-    private fun favoritePostsJson(): String {
+    private fun favoritePostsJson(noCache: Boolean = false): String {
         val request = Request.Builder()
 //            .url("$BASE_URL/api/favorites?type=post")
             .url("$BASE_URL/api/v1/account/favorites?type=post")
             .addHeader("cookie", account!!.cookie)
+            .let {
+                if(noCache) it.cacheControl(CacheControl.FORCE_NETWORK)
+                else it
+            }
             .get()
             .build()
         val response = noRedirectsClient.newCall(request).execute()
