@@ -110,7 +110,7 @@ object AccountNetwork {
     fun FavoritePostItem.unFavorite() = unFavoritePost(service, user, id)
 
     fun FavoriteArtistItem.toSimpleArtist() =
-        SimpleArtist(id, indexed, name, service, updated, indexedTimestamp, updatedTimestamp, icon)
+        SimpleArtist(id, indexedTimestamp.toFloat(), name, service, updatedTimestamp.toFloat(), indexedTimestamp, updatedTimestamp, icon)
 
     fun FavoriteArtistItem.toArtist() =
         this.toSimpleArtist().toArtist()

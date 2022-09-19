@@ -6,14 +6,16 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SimpleArtist(
     val id: String,                     //作者id
-    val indexed: String = "",           //创建日期
+    val indexed: Float = 0f,            //创建日期
     val name: String = "",              //作者名称
     val service: String,                //隶属于的服务器 详见ArtistService
-    val updated: String = "",           //更新日期
+    val updated: Float = 0f,            //更新日期
     //以下内容为解析、计算获得
     var indexedTimestamp: Long = 0,     //创建时间戳
     var updatedTimestamp: Long = 0,     //更新时间戳
-    var icon: String = ""               //作者头像
+    var icon: String = "",              //作者头像
+    // 2022-08-18 新增字段
+    val favorited: Int = 0,             //收藏人数
 )
 
 //作者概述 包含首页缩略图

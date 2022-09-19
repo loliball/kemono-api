@@ -65,8 +65,8 @@ object ArtistFactory {
         val artistList = Json.decodeFromString<List<SimpleArtist>>(json)
         artistList.forEach {
             try {
-                it.indexedTimestamp = GTMDateParser.parse(it.indexed).time
-                it.updatedTimestamp = GTMDateParser.parse(it.updated).time
+                it.indexedTimestamp = it.indexed.toLong() * 1000L
+                it.updatedTimestamp = it.updated.toLong() * 1000L
                 it.icon = "$BASE_URL/icons/${it.service}/${it.id}"
             } catch (e: Exception) {
                 println("error parse $it")
