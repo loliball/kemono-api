@@ -3,7 +3,7 @@ package loli.ball.kemono
 import java.text.SimpleDateFormat
 import java.util.*
 
-const val BASE_URL = "https://beta.kemono.party"
+const val BASE_URL = "https://kemono.party"
 
 //Mon, 02 Aug 2021 01:35:16 GMT
 val GTMDateParser = object : SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'", Locale.ENGLISH) {
