@@ -9,7 +9,11 @@ const val BASE_URL = "https://kemono.party"
 val GTMDateParser = object : SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'", Locale.ENGLISH) {
     override fun parse(source: String?): Date {
         if (source.isNullOrBlank()) return Date(0L)
-        return super.parse(source)
+        return try {
+            super.parse(source)
+        } catch (e: Exception) {
+            Date(0)
+        }
     }
 }
 
@@ -17,7 +21,11 @@ val GTMDateParser = object : SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'",
 val dateParser = object : SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH) {
     override fun parse(source: String?): Date {
         if (source.isNullOrBlank()) return Date(0L)
-        return super.parse(source)
+        return try {
+            super.parse(source)
+        } catch (e: Exception) {
+            Date(0)
+        }
     }
 }
 
