@@ -121,7 +121,7 @@ object PostFactory {
         for (fi in fs?.children().orEmpty()) {
             if (fi.hasClass("post__attachment")) {
                 val a = fi.child(0)
-                val fileUrl = BASE_URL + a.attr("href")
+                val fileUrl = a.attr("href")
                 val fileName = a.text().replaceFirst("Download ", "")
                 files.add(RemoteFile(fileName, fileUrl))
             }
@@ -132,7 +132,7 @@ object PostFactory {
         for (pic in pics?.children().orEmpty()) {
             if (pic.hasClass("post__thumbnail")) {
                 val a = pic.child(0)
-                val fullImage = BASE_URL + a.attr("href")
+                val fullImage = a.attr("href")
                 val thumbnail = BASE_URL + a.child(0).attr("data-src")
                 pictures.add(Picture(thumbnail, fullImage))
             }
